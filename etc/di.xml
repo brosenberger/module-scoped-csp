@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Csp\Model\CompositePolicyCollector">
+        <arguments>
+            <argument name="collectors" xsi:type="array">
+                <item name="scopedwhitelist" xsi:type="object" sortOrder="20">BroCode\ScopedCsp\Model\Collector\ScopedCspWhitelistXmlCollector\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="BroCode\ScopedCsp\Model\Collector\ScopedCspWhitelistXml\Reader">
+        <arguments>
+            <argument name="converter" xsi:type="object">BroCode\ScopedCsp\Model\Collector\ScopedCspWhitelistXml\Converter</argument>
+            <argument name="schemaLocator" xsi:type="object">BroCode\ScopedCsp\Model\Collector\ScopedCspWhitelistXml\SchemaLocator</argument>
+            <argument name="fileResolver" xsi:type="object">BroCode\ScopedCsp\Model\Collector\ScopedCspWhitelistXml\FileResolver</argument>
+            <argument name="fileName" xsi:type="string">scoped_csp_whitelist.xml</argument>
+        </arguments>
+    </type>
+    <type name="BroCode\ScopedCsp\Model\Collector\ScopedCspWhitelistXmlCollector">
+        <arguments>
+            <argument name="configReader" xsi:type="object">BroCode\ScopedCsp\Model\Collector\ScopedCspWhitelistXml\Data</argument>
+        </arguments>
+    </type>
+    <type name="BroCode\ScopedCsp\Model\Collector\ScopedCspWhitelistXml\Data">
+        <arguments>
+            <argument name="reader" xsi:type="object">BroCode\ScopedCsp\Model\Collector\ScopedCspWhitelistXml\Reader\Proxy</argument>
+        </arguments>
+    </type>
+</config>
