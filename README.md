@@ -1,7 +1,23 @@
+# Magento 2 Scoped CSP 
 
-## Sample of a Scoped CSP Whitelist file:
+This module provides an additional configuration possibility for CSP whitelists with scope definition (website, store or storeview).
 
-scoped_csp_whitelist.xml:
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/brosenberger)
+
+## Installation
+
+```
+composer require brocode/module-scoped-csp
+bin/magento setup:upgrade
+```
+
+The module should be enabled by default and does not need separate enabling.
+
+## Configuration
+
+Add a `scoped_csp_whitelist.xml` into your etc-folder containing all needed policies.
+
+**Sample `scoped_csp_whitelist.xml`**:
 ````xml 
 <?xml version="1.0" encoding="UTF-8"?>
 <csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -17,7 +33,10 @@ scoped_csp_whitelist.xml:
 </csp_whitelist>
 ````
 
+If no scope type is given, the policy is applied to all scopes (so basically the same behavior as the default csp_whitelist.xml).
+
+If a scope type other then `default` is given, a scope code must be set as well.
+
 ## TODOs
 
 - use XSD schema extension instead of XSD copy and extend of original csp_whitelist.xsd
-- write better readme
