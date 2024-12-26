@@ -38,19 +38,29 @@ class Converter implements ConverterInterface
                 if ($value->attributes->getNamedItem('type')->nodeValue === 'host') {
                     $policyConfig[$id]['hosts'][$value->attributes->getNamedItem('id')->nodeValue] = [
                         'value' => $value->nodeValue,
-                        'scopeType' => $value->attributes->getNamedItem('scopeType')->nodeValue,
-                        'scopeCode' => $value->attributes->getNamedItem('scopeCode')->nodeValue
+                        'id' => $value->attributes->getNamedItem('id')->nodeValue,
+                        'scopeType' => $this->getOptionalAttribute($value, 'scopeType', 'default'),
+                        'scopeCode' => $this->getOptionalAttribute($value, 'scopeCode')
                     ];
                 } else {
                     $policyConfig[$id]['hashes'][$value->nodeValue] = [
                         'value' => $value->attributes->getNamedItem('algorithm')->nodeValue,
-                        'scopeType' => $value->attributes->getNamedItem('scopeType')->nodeValue,
-                        'scopeCode' => $value->attributes->getNamedItem('scopeCode')->nodeValue
+                        'id' => $value->attributes->getNamedItem('id')->nodeValue,
+                        'scopeType' => $this->getOptionalAttribute($value, 'scopeType', 'default'),
+                        'scopeCode' => $this->getOptionalAttribute($value, 'scopeCode')
                     ];
                 }
             }
         }
 
         return $policyConfig;
+    }
+
+    protected function getOptionalAttribute($element, $attributeName, $defaultValue = null)
+    {
+        if ($element->hasAttribute($attributeName)) {
+            return $element->getAttribute($attributeName);
+        }
+        return $defaultValue;
     }
 }
